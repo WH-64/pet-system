@@ -20,7 +20,7 @@ def new_pet():
         conn = get_conn()
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO pets (nick_name, age, sex, weight) VALUES (%s, %s, %s, %s)",
+            "INSERT INTO pets (nick_name, age, sex, weight) VALUES (?, ?, ?, ?)",
             (nick_name, age, sex, weight)
         )
         conn.commit()
@@ -103,7 +103,7 @@ def update_pet():
         conn = get_conn()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT nick_name, age, sex, weight FROM pets WHERE id=%s",
+            "SELECT nick_name, age, sex, weight FROM pets WHERE id=?",
             (pet_id,)
         )
         pet = cursor.fetchone()
@@ -131,8 +131,8 @@ def update_pet():
             cursor = conn.cursor()
             cursor.execute(
                 """UPDATE pets 
-                   SET nick_name=%s, age=%s, sex=%s, weight=%s 
-                   WHERE id=%s""",
+                   SET nick_name=?, age=?, sex=?, weight=? 
+                   WHERE id=?""",
                 (new_name, new_age, new_sex, new_weight, st.session_state["pet_id"])
             )
             conn.commit()
@@ -154,7 +154,7 @@ def delete_pet():
     if st.button("确认删除"):
         conn = get_conn()
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM pets WHERE id=%s", (pet_id,))
+        cursor.execute("DELETE FROM pets WHERE id=?", (pet_id,))
         conn.commit()
         conn.close()
         st.success("✅ 删除成功")

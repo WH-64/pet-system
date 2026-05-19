@@ -1,3 +1,6 @@
+from db import init_db
+init_db()
+
 import streamlit as st
 from pet_tools import (
     new_pet,
