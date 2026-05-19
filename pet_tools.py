@@ -69,7 +69,7 @@ def search_pet():
         conn = get_conn()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT id, nick_name, age, sex, weight FROM pets WHERE nick_name LIKE %s",
+            "SELECT id, nick_name, age, sex, weight FROM pets WHERE nick_name LIKE ?",
             (f"%{keyword}%",)
         )
         rows = cursor.fetchall()
